@@ -40,7 +40,7 @@ const updateTypedTestMistakes = (state, action) => {
   }
 
   return [...state.typedTextMistakes, { 
-    char: state.currentChar,
+    char: action.keyPressed,
     time,
     timeFromStart,
   }]

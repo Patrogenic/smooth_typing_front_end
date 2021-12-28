@@ -1,15 +1,21 @@
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import TypingTestText from './TypingTestText'
-
+import { handleKeyPress } from '../reducers/typingTestReducer'
 
 const TypingTest = () => {
-  const data = useSelector(state => state);
+  const dispatch = useDispatch();
+  const testData = useSelector(state => state.typingTest);
+
+  const style = {
+    width: "100%",
+    height: "100%",
+  }
 
   return(
-    <div>
-      <TypingTestText text={data.typedText} />
-      <TypingTestText text={data.currentChar} color={data.color} />
-      <TypingTestText text={data.untypedText} />
+    <div style={style} onKeyPress={event => dispatch(handleKeyPress(event, testData.currentChar, testData.untypedText.length))} tabIndex="0">
+      <TypingTestText text={testData.typedText} />
+      <TypingTestText text={testData.currentChar} color={testData.color} />
+      <TypingTestText text={testData.untypedText} />
     </div> 
   )
 }

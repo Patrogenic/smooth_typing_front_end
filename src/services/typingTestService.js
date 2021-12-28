@@ -1,6 +1,16 @@
+import axios from 'axios';
+
+const url = "http://localhost:3001/api/typingtest";
+
+const sendTestData = async (data) => {
+  let response = await axios.post(url, data);
+
+  return response;
+}
 
 
 const handleKeyPress = (event, currentChar, charsLeft) => {
+  event.preventDefault();
 
   if(charsLeft === 0){
     return "FINISHED";
@@ -12,4 +22,4 @@ const handleKeyPress = (event, currentChar, charsLeft) => {
 }
 
 
-export default { handleKeyPress }
+export default { handleKeyPress, sendTestData }
