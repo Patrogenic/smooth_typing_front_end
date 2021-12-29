@@ -1,24 +1,43 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import typingTestService from '../services/typingTestService'
 import TestDetails from './TestDetails'
 import { showDetails } from '../reducers/testResultsReducer'
+import { nextSlide } from '../reducers/introTestReducer'
+import { resetTest } from '../reducers/typingTestReducer';
+import { aboutText } from '../data/textData'
 
-const TestResults = () => {
+const TestResults = ({ type }) => {
   const dispatch = useDispatch();
   const [ testDetails, setTestDetails ] = useState({})
   const testData = useSelector(state => state.typingTest);
   const testResults = useSelector(state => state.testResults);
+  const introTest = useSelector(state => state.introTest);
   const mistakes = testData.typedTextMistakes.length - testData.typedText.length;
-  const testTimeElapsed = testData.typedTextMistakes.at(-1).timeFromStart / 1000;
+  const testTimeElapsed = Math.round(testData.typedTextMistakes.at(-1).timeFromStart / 10) / 100;
   const wpm = Math.round(60 * (testData.typedText.length / 5) / testTimeElapsed);
   const accuracy = Math.round(1000 * ( testData.typedText.length - mistakes ) / testData.typedText.length) / 10 + "%";
+
+  const testResultsStyle = {
+    fontFamily: "sans-serif",
+  }
 
   //work on button positioning
   const buttonStyle = {
     position: "absolute",
     bottom: 20,
     right: 20,
+  }
+  const statsWrapper = {
+    display: "flex",
+    justifyContent: "space-around"
+  }
+
+  const finishedStyle = {
+    textAlign: "center",
+    fontSize: 30,
+    marginBottom: 50,
   }
 
   useEffect(() => {
@@ -30,14 +49,32 @@ const TestResults = () => {
     });
   }, [])
 
+  //results view will vary based on the type of test
+
+  const handleContinue = () => {
+    dispatch(resetTest(aboutText[introTest.textSlide + 1]));
+    dispatch(nextSlide());
+  }
+
   return(
     <div>
-      <div>Test Finished in {testTimeElapsed} seconds.</div>
-      <div>WPM: {wpm}</div>
-      <div>Accuracy: {accuracy}</div>
+      <div style={finishedStyle}>Finished!</div>
+      <div style={statsWrapper}>
+        <div>Time: {testTimeElapsed} sec</div>
+        <div>WPM: {wpm}</div>
+        <div>Accuracy: {accuracy}</div>
+      </div>
       <button style={buttonStyle} onClick={() => dispatch(showDetails())}>Details</button>
 
+
       {testResults.showDetails && <TestDetails testDetails={testDetails}/>}
+
+      {/* I need to increment a value that represents where the user is in the intro texts and then have a value that will reset the test */}
+      {type === "site intro" && !introTest.finished && <button onClick={handleContinue}>Continue</button>}
+      
+      {introTest.finished && <Link to="/test">Continue to Tests</Link>}
+
+      {type === "test" && <button>Next Test</button>}
 
     </div>
   )

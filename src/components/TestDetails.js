@@ -34,7 +34,7 @@ const TestDetails = ({ testDetails }) => {
   }
 
   const highlightStyle = {
-    backgroundColor: "green",
+    backgroundColor: "lightgreen",
   }
 
   const highlightSequence = (seq) => {
@@ -43,7 +43,7 @@ const TestDetails = ({ testDetails }) => {
     let post = testData.typedText;
     let key = 0;
 
-    while(post.indexOf(seq) != -1){
+    while(post.indexOf(seq) !== -1){
       let index = post.indexOf(seq);
       let pre = post.slice(0, index);
       let target = post.slice(index, index + len);

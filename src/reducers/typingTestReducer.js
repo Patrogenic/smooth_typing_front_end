@@ -52,7 +52,7 @@ const setInit = (state, action) => {
     typedTextMistakes: [],
     currentChar: action.data.charAt(0),
     untypedText: action.data.substring(1),
-    color: "green",
+    color: "lightgreen",
   }
 }
 
@@ -63,14 +63,14 @@ const setStepForward = (state, action) => {
     typedTextMistakes: updateTypedTestMistakes(state, action),
     currentChar: state.untypedText.charAt(0),
     untypedText: state.untypedText.substring(1),
-    color: "green",
+    color: "lightgreen",
   }
 }
 const setMistake = (state, action) => {
   return {
     ...state,
     typedTextMistakes: updateTypedTestMistakes(state, action),
-    color: "red",
+    color: "lightsalmon",
   }
 }
 
@@ -89,6 +89,18 @@ const setFinished = (state, action) => {
   }
 }
 
+//if there is no text data, we will reuse the text from the previous test
+const setReset = (state, action) => {
+  if(!action.data){
+    action.data = state.typedText;
+  }
+
+  return{
+    ...initialState,
+    ...setInit(state, action),
+  }
+}
+
 const typingTestReducer = (state = initialState, action) => {
   switch(action.type){
     case "INIT":
@@ -99,6 +111,8 @@ const typingTestReducer = (state = initialState, action) => {
       return setMistake(state, action);
     case "FINISHED":
       return setFinished(state, action);
+    case "RESET":
+      return setReset(state, action);
     default: return state
   }
 }
@@ -117,6 +131,7 @@ export const handleKeyPress = (event, currentChar, charsLeft) => {
 }
 
 export const initializeText = text => { return { data: text, type: "INIT" }}
+export const resetTest = (text) => { return { data: text, type: "RESET" }}
 
 
 export default typingTestReducer;

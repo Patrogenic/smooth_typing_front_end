@@ -7,10 +7,14 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk';
 import typingTestReducer from './reducers/typingTestReducer'
 import testResultsReducer from './reducers/testResultsReducer'
+import userReducer from './reducers/userReducer'
+import introTestReducer from './reducers/introTestReducer'
 
 const reducer = combineReducers({
   typingTest: typingTestReducer,
   testResults: testResultsReducer,
+  user: userReducer,
+  introTest: introTestReducer,
 })
 
 const store = createStore(
