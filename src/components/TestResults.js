@@ -26,10 +26,15 @@ const TestResults = ({ type }) => {
   //work on button positioning
   const buttonStyle = {
     position: "absolute",
-    bottom: 20,
-    right: 20,
+    bottom: 25,
+    right: 35,
   }
+
+
   const statsWrapper = {
+    width: "100%",
+    position: "absolute",
+    bottom: 70,
     display: "flex",
     justifyContent: "space-around"
   }
@@ -58,23 +63,23 @@ const TestResults = ({ type }) => {
 
   return(
     <div>
-      <div style={finishedStyle}>Finished!</div>
+      <TestDetails testDetails={testDetails}/>
+      {/* <div style={finishedStyle}>Finished!</div> */}
       <div style={statsWrapper}>
         <div>Time: {testTimeElapsed} sec</div>
         <div>WPM: {wpm}</div>
         <div>Accuracy: {accuracy}</div>
       </div>
-      <button style={buttonStyle} onClick={() => dispatch(showDetails())}>Details</button>
-
+      {/* <button style={buttonStyle} onClick={() => dispatch(showDetails())}>Details</button> */}
 
       {testResults.showDetails && <TestDetails testDetails={testDetails}/>}
 
       {/* I need to increment a value that represents where the user is in the intro texts and then have a value that will reset the test */}
-      {type === "site intro" && !introTest.finished && <button onClick={handleContinue}>Continue</button>}
+      {type === "site intro" && !introTest.finished && <button style={buttonStyle} onClick={handleContinue}>Continue</button>}
       
       {introTest.finished && <Link to="/test">Continue to Tests</Link>}
 
-      {type === "test" && <button>Next Test</button>}
+      {type === "test" && <button style={buttonStyle}>Next Test</button>}
 
     </div>
   )

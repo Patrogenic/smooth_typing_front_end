@@ -9,7 +9,7 @@ import MistakeStats from './MistakeStats';
 const TestDetails = ({ testDetails }) => {
   const dispatch = useDispatch();
   const testData = useSelector(state => state.typingTest);
-  const [highlights, setHighlights] = useState([<span>{testData.typedText}</span>]);
+  const [highlights, setHighlights] = useState([<span key={1}>{testData.typedText}</span>]);
 
   const modalStyle = {
     display: "block", /* Hidden by default */
@@ -32,6 +32,12 @@ const TestDetails = ({ testDetails }) => {
     width: "80%", /* Could be more or less, depending on screen size */
     maxWidth: 700,
   }
+  
+  const statsStyle = {
+    marginTop: 40,
+    display: "flex",
+    justifyContent: "space-around"
+  }
 
   const highlightStyle = {
     backgroundColor: "lightgreen",
@@ -43,11 +49,12 @@ const TestDetails = ({ testDetails }) => {
     let post = testData.typedText;
     let key = 0;
 
-    while(post.indexOf(seq) !== -1){
+    while(post.indexOf(seq) !== -1 && len != 0){
       let index = post.indexOf(seq);
       let pre = post.slice(0, index);
       let target = post.slice(index, index + len);
       post = post.slice(index + len);
+
 
       highlights.push(<span key={key++}>{pre}</span>);
       highlights.push(<span key={key++} style={highlightStyle}>{target}</span>);
@@ -60,15 +67,18 @@ const TestDetails = ({ testDetails }) => {
   }
 
   return(
-    <div style={modalStyle}>
-      <div style={modalContentStyle}>
-        <SequenceStats type="Best" sequences={testDetails.bestSequences} highlightFn={highlightSequence} />
-        <SequenceStats type="Worst" sequences={testDetails.worstSequences} highlightFn={highlightSequence} />
-        <MistakeStats mistakeData={testDetails.mistakeData} highlightFn={highlightSequence} />
-        <br/>
+    <div>
+      <div>
+        {/* I might want to limit this to a certain number of lines and then scroll */}
         <TestHighlights highlights={highlights} />
+        <div style={statsStyle}>
+          <SequenceStats type="Best" sequences={testDetails.bestSequences} highlightFn={highlightSequence} />
+          <SequenceStats type="Worst" sequences={testDetails.worstSequences} highlightFn={highlightSequence} />
+          <MistakeStats mistakeData={testDetails.mistakeData} highlightFn={highlightSequence} />
+        </div>
+        <br/>
         {/* {testResults.showHighlights && <TestHighlights highlights={highlights} />} */}
-        <button onClick={() => dispatch(hideDetails())}>Close</button>
+        {/* <button onClick={() => dispatch(hideDetails())}>Close</button> */}
       </div>
     </div>
   )

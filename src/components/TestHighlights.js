@@ -3,6 +3,12 @@
 const TestHighlights = ({ highlights }) => {
   const style = {
     backgroundColor: "white",
+    fontFamily: "monospace",
+    border: "1px solid black",
+    padding: 5,
+    height: 92,
+    overflowY: "auto",
+    boxSizing: "content-box",
   }
 
   return(
