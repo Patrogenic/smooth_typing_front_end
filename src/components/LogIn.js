@@ -34,12 +34,13 @@ const LogIn = () => {
     setPasswordConfirmed(event.target.value);
   }
 
-  const handleLogIn = (event) => {
+  const handleLogIn = async (event) => {
     event.preventDefault();
 
     //clear fields?
 
     dispatch(logIn(username, password));
+    console.log(userData)
   }
 
   const handleRegister = (event) => {

@@ -6,7 +6,7 @@ const url = "http://localhost:3001/api/user";
 const register = async (username, password, password_confirmed) => {
   try {
     let response = await axios.post(`${url}/register`, { username, password, password_confirmed });
-    localStorage.setItem('token', JSON.stringify(response.data.token));
+    localStorage.setItem('token', response.data.token);
     
     return response;
   } catch (error) {
@@ -17,10 +17,9 @@ const register = async (username, password, password_confirmed) => {
 const logIn = async (username, password) => {
   try {
     let response = await axios.post(`${url}/login`, { username, password });
-    localStorage.setItem('token', JSON.stringify(response.data.token));
+    localStorage.setItem('token', response.data.token);
 
     return response;
-    
   } catch (error) {
     throw(error);
   }
@@ -28,6 +27,8 @@ const logIn = async (username, password) => {
 }
 
 const logOut = () => {
+  //I will need to clear redux-persist local storage data on logout
+  //localStorage.clear(); to clear all localStorage
   localStorage.removeItem('token');
 }
 
@@ -43,14 +44,14 @@ const validate = async () => {
 
 
 const getAuthHeader = () => {
-  const token = JSON.parse(localStorage.getItem('token'));
+  const token = localStorage.getItem('token');
 
   if (token) {
-    return { 'x-access-token': token };
+    return { headers: { 'x-access-token': token }};
   } else {
     return {};
   }
 }
 
 
-export default { logIn, register, validate };
+export default { logIn, logOut, register, validate, getAuthHeader };

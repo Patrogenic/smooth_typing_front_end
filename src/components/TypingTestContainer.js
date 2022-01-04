@@ -24,7 +24,8 @@ const TypingTestContainer = ({ text, type }) => {
     if(text){
       dispatch(initializeText(text));
     }
-  }, [dispatch]);
+  }, [dispatch, text]);
+
 
   return(
     <div style={typingTestStyles}>

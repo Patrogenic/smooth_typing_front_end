@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import typingTestService from '../services/typingTestService'
 import TestDetails from './TestDetails'
 import { showDetails } from '../reducers/testResultsReducer'
 import { nextSlide } from '../reducers/introTestReducer'
 import { resetTest } from '../reducers/typingTestReducer';
+import { newTest } from '../reducers/userReducer';
 import { aboutText } from '../data/textData'
 
 const TestResults = ({ type }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [ testDetails, setTestDetails ] = useState({})
   const testData = useSelector(state => state.typingTest);
@@ -17,11 +19,7 @@ const TestResults = ({ type }) => {
   const mistakes = testData.typedTextMistakes.length - testData.typedText.length;
   const testTimeElapsed = Math.round(testData.typedTextMistakes.at(-1).timeFromStart / 10) / 100;
   const wpm = Math.round(60 * (testData.typedText.length / 5) / testTimeElapsed);
-  const accuracy = Math.round(1000 * ( testData.typedText.length - mistakes ) / testData.typedText.length) / 10 + "%";
-
-  const testResultsStyle = {
-    fontFamily: "sans-serif",
-  }
+  const accuracy = Math.round(1000 * ( testData.typedText.length - mistakes ) / testData.typedText.length) / 10;
 
   //work on button positioning
   const buttonStyle = {
@@ -29,7 +27,6 @@ const TestResults = ({ type }) => {
     bottom: 25,
     right: 35,
   }
-
 
   const statsWrapper = {
     width: "100%",
@@ -39,26 +36,48 @@ const TestResults = ({ type }) => {
     justifyContent: "space-around"
   }
 
-  const finishedStyle = {
-    textAlign: "center",
-    fontSize: 30,
-    marginBottom: 50,
-  }
 
+
+  //performs an api call when I click "continue to tests"
   useEffect(() => {
+    console.log("test results");
     //async
     //send { text: typedText, typedText: typedTextMistakes } (I will need to work on more uniform naming conventions)
     //no error checking? (what happens when the server is not running)
-    typingTestService.sendTestData({ text: testData.typedText, typedText: testData.typedTextMistakes }).then(res => {
+    let newTestData = { text: testData.typedText, typedText: testData.typedTextMistakes, wpm, accuracy, time: testTimeElapsed };
+    typingTestService.sendTestData(newTestData).then(res => {
+      console.log("api call on test completion")
       setTestDetails(res.data);
+      dispatch(newTest(newTestData));
     });
+
+    if(type === "site intro" && introTest.textSlide + 1 < aboutText.length){
+      return () => {
+        console.log(introTest.textSlide);
+        dispatch(nextSlide());
+        dispatch(resetTest());
+      }
+    }else{
+      return () => {
+        setTestDetails({});
+      }
+    }
   }, [])
+
 
   //results view will vary based on the type of test
 
   const handleContinue = () => {
-    dispatch(resetTest(aboutText[introTest.textSlide + 1]));
-    dispatch(nextSlide());
+    dispatch(resetTest());
+  }
+
+  const handleContinueToTests = () => {
+    dispatch(resetTest());
+    history.push('/test');
+  }
+
+  const handleNewTest = () => {
+    window.location.reload();
   }
 
   return(
@@ -68,18 +87,17 @@ const TestResults = ({ type }) => {
       <div style={statsWrapper}>
         <div>Time: {testTimeElapsed} sec</div>
         <div>WPM: {wpm}</div>
-        <div>Accuracy: {accuracy}</div>
+        <div>Accuracy: {accuracy} %</div>
       </div>
-      {/* <button style={buttonStyle} onClick={() => dispatch(showDetails())}>Details</button> */}
 
       {testResults.showDetails && <TestDetails testDetails={testDetails}/>}
 
-      {/* I need to increment a value that represents where the user is in the intro texts and then have a value that will reset the test */}
-      {type === "site intro" && !introTest.finished && <button style={buttonStyle} onClick={handleContinue}>Continue</button>}
-      
-      {introTest.finished && <Link to="/test">Continue to Tests</Link>}
+      {type === "site intro" && (!introTest.finished ? 
+        <button style={buttonStyle} onClick={handleContinue}>Continue</button> :
+        <a style={buttonStyle} onClick={handleContinueToTests}>Continue to Tests</a>)}
 
-      {type === "test" && <button style={buttonStyle}>Next Test</button>}
+      {/* functionality is unimplemented currently */}
+      {type === "test" && <button style={buttonStyle} onClick={handleNewTest}>Next Test</button>}
 
     </div>
   )

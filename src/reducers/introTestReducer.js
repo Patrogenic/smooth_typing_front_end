@@ -7,12 +7,12 @@ const initialState = {
 
 const setNext = (state, action) => {
 
-  if(state.textSlide + 2 < aboutText.length){
-    return { ...state, textSlide: state.textSlide + 1 };
-  }else{
-    return { ...state, finished: true };
+  let finished = false;
+  if(state.textSlide + 2 >= aboutText.length){
+    finished = true;
   }
 
+  return { ...state, textSlide: state.textSlide + 1, finished };
 }
 
 const introTestReducer = (state = initialState, action) => {

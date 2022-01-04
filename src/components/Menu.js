@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import userService from '../services/userService';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../reducers/userReducer';
 
-const Menu = () => {
+const Menu = ({ validated, loggedIn }) => {
   const dispatch = useDispatch();
-  const userData = useSelector(state => state.user);
+  // const [ loggedIn, setLoggedIn ] = useState(false);
 
   const navWrapperStyles = {
     backgroundColor: "lightBlue",
@@ -29,14 +29,16 @@ const Menu = () => {
     height: 100,
   }
 
-  useEffect(() => {
-    if(localStorage.getItem('token')){
-      userService.validate().then(response => {}, error => {
-        localStorage.removeItem('token');
-        dispatch(logOut());
-      })
-    }
-  }, [])
+  // useEffect(() => {
+  //   if(localStorage.getItem('token')){
+  //     userService.validate().then(response => {
+  //       setLoggedIn(true);
+  //     }, error => {
+  //       localStorage.removeItem('token');
+  //       dispatch(logOut());
+  //     })
+  //   }
+  // }, [])
 
 
   // Think about names for the menu items
@@ -48,7 +50,7 @@ const Menu = () => {
           <Link to="/test" style={navItemStyles}>Test</Link>
           <Link to="/about" style={navItemStyles}>About</Link>
 
-          {userData.username ? 
+          {loggedIn ? 
             <Link to="/dashboard" style={navItemStyles}>Dashboard</Link> :
             <Link to="/login" style={navItemStyles}>Log In</Link>}
         </nav>
