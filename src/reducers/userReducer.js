@@ -30,7 +30,9 @@ const userReducer = (state = initialState, action) => {
 export const logIn = (username, password) => (dispatch) => { 
 
   userService.logIn(username, password).then(response => {
-    console.log(response.data);
+    if(response.data.errors){
+      throw(response.data.errors);
+    }
     dispatch({
       type: "LOG_IN_SUCCESS",
       data: response.data,
@@ -44,13 +46,22 @@ export const logIn = (username, password) => (dispatch) => {
       type: "LOG_IN_FAILURE",
       errors: message,
     })
+  }).catch(errors => {
+    console.log(errors);
+    const message = errors.map(error => error.msg).toString();
+    dispatch({
+      type: "LOG_IN_FAILURE",
+      errors: message,
+    })
   });
 };
 
 export const register = (username, password, passwordConfirmed) => (dispatch) => {
 
   userService.register(username, password, passwordConfirmed).then(response => {
-    console.log(response);
+    if(response.data.errors){
+      throw(response.data.errors);
+    }
     dispatch({
       type: "REGISTER_SUCCESS",
       username: response.data.username,
@@ -62,7 +73,14 @@ export const register = (username, password, passwordConfirmed) => (dispatch) =>
       type: "REGISTER_FAILURE",
       errors: message,
     })
-  })
+  }).catch(errors => {
+    console.log(errors);
+    const message = errors.map(error => error.msg).toString();
+    dispatch({
+      type: "LOG_IN_FAILURE",
+      errors: message,
+    })
+  });
 }
 
 export const logOut = () => { 

@@ -1,14 +1,20 @@
-
+import QuestionMark from './QuestionMark'
 
 const SequenceStats = ({ type, sequences, highlightFn }) => {
+  const helpText = `These are the sequences of characters you typed the ${type.toLowerCase()}.`;
+
+  const headerStyles = {
+    fontSize: 25,
+    display: "inline-block",
+  }
 
   return(
     <div>
-      {type}:
+      <div style={headerStyles}>{type}:</div> <QuestionMark text={helpText} />
       {sequences && sequences.map(seq => 
-        <div className="highlight-sequence" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}": {Math.round(48 / (seq.avgTime / 1000) * 10) / 10} WPM ({seq.instances})</div>  
+        <div className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}": {Math.round(48 / (seq.avgTime / 1000) * 10) / 10} WPM ({seq.instances})</div>  
       )}
-        {/* <div className="highlight-sequence" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}", WPM: {Math.round(48 / (seq.avgTime / 1000) * 10) / 10}, Freq: {seq.instances}  </div>   */}
+        {/* <div className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}", WPM: {Math.round(48 / (seq.avgTime / 1000) * 10) / 10}, Freq: {seq.instances}  </div>   */}
 
     </div>
   )

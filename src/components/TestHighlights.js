@@ -9,6 +9,7 @@ const TestHighlights = ({ highlights }) => {
     height: 92,
     overflowY: "auto",
     boxSizing: "content-box",
+    borderRadius: 4,
   }
 
   return(

@@ -17,6 +17,14 @@ const DashBoard = () => {
     fontSize: 20,
   }
 
+  const listItemStyle = {
+    paddingTop: 10,
+    height: 30,
+    borderBottom: "1px solid black",
+  }
+
+  
+
   const handleLogOut = () => {
     dispatch(logOut());
     window.location.reload();
@@ -24,11 +32,11 @@ const DashBoard = () => {
 
   return(
     <div style={dashboardStyles}>
-      Dashboard: {userData.username}
+      <h2>Dashboard: {userData.username}</h2>
+      <h3>Recent Tests</h3>
       {userData.typingData.map((data, index) => 
         <div key={index}>
-          <div>Test {index}</div>
-          <div>WPM: {data.wpm} Time: {data.time} Accuracy: {data.accuracy}%</div>
+          <div style={listItemStyle}><span style={{fontWeight: "bold"}}>{index + 1} </span>WPM: {data.wpm} Time: {data.time} Accuracy: {data.accuracy}%</div>
         </div>
       )}
       <div><button onClick={handleLogOut}>Log Out</button></div>

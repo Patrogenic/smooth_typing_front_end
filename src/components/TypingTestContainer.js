@@ -16,6 +16,8 @@ const TypingTestContainer = ({ text, type }) => {
     padding: 10,
     margin: "0 auto",
     fontSize: 20,
+    borderRadius: 10,
+    boxShadow: "5px 5px 15px #075d8f",
   }
 
   useEffect(() => {

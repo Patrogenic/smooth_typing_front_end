@@ -14,7 +14,7 @@ const TypingTest = () => {
 
   return(
     <div style={style} onKeyPress={event => dispatch(handleKeyPress(event, testData.currentChar, testData.untypedText.length))} tabIndex="0">
-      <TypingTestText text={testData.typedText} />
+      <TypingTestText text={testData.typedText} textColor="grey" />
       <TypingTestText text={testData.currentChar} color={testData.color} />
       <TypingTestText text={testData.untypedText} />
     </div> 

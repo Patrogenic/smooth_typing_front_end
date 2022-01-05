@@ -72,8 +72,8 @@ const TestDetails = ({ testDetails }) => {
         {/* I might want to limit this to a certain number of lines and then scroll */}
         <TestHighlights highlights={highlights} />
         <div style={statsStyle}>
-          <SequenceStats type="Best" sequences={testDetails.bestSequences} highlightFn={highlightSequence} />
-          <SequenceStats type="Worst" sequences={testDetails.worstSequences} highlightFn={highlightSequence} />
+          <SequenceStats type="Fastest" sequences={testDetails.bestSequences} highlightFn={highlightSequence} />
+          <SequenceStats type="Slowest" sequences={testDetails.worstSequences} highlightFn={highlightSequence} />
           <MistakeStats mistakeData={testDetails.mistakeData} highlightFn={highlightSequence} />
         </div>
         <br/>

@@ -1,9 +1,10 @@
 
 
-const TypingTestText = ({text, color}) => {
+const TypingTestText = ({text, color, textColor}) => {
 
   const textStyle = {
-    backgroundColor: color || "transparent"
+    backgroundColor: color || "transparent",
+    color: textColor || "inherit",
   }
 
   return(

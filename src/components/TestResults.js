@@ -24,14 +24,21 @@ const TestResults = ({ type }) => {
   //work on button positioning
   const buttonStyle = {
     position: "absolute",
-    bottom: 25,
-    right: 35,
+    bottom: 40,
+    right: 50,
+    // color: 
+    // border: "none",
+    backgroundColor: "#db9a2a",
+    borderRadius: 3,
+    padding: 5,
+    border: "none",
+    fontSize: 20,
   }
 
   const statsWrapper = {
     width: "100%",
     position: "absolute",
-    bottom: 70,
+    bottom: 100,
     display: "flex",
     justifyContent: "space-around"
   }
@@ -68,7 +75,7 @@ const TestResults = ({ type }) => {
   //results view will vary based on the type of test
 
   const handleContinue = () => {
-    dispatch(resetTest());
+    dispatch(resetTest(" "));
   }
 
   const handleContinueToTests = () => {
@@ -81,7 +88,7 @@ const TestResults = ({ type }) => {
   }
 
   return(
-    <div>
+    <div className="fade">
       <TestDetails testDetails={testDetails}/>
       {/* <div style={finishedStyle}>Finished!</div> */}
       <div style={statsWrapper}>
@@ -93,11 +100,11 @@ const TestResults = ({ type }) => {
       {testResults.showDetails && <TestDetails testDetails={testDetails}/>}
 
       {type === "site intro" && (!introTest.finished ? 
-        <button style={buttonStyle} onClick={handleContinue}>Continue</button> :
-        <a style={buttonStyle} onClick={handleContinueToTests}>Continue to Tests</a>)}
+        <button style={buttonStyle} className="hover" onClick={handleContinue}>Continue</button> :
+        <a style={buttonStyle} className="hover" onClick={handleContinueToTests}>Continue to Tests</a>)}
 
       {/* functionality is unimplemented currently */}
-      {type === "test" && <button style={buttonStyle} onClick={handleNewTest}>Next Test</button>}
+      {type === "test" && <button style={buttonStyle} className="hover" onClick={handleNewTest}>Next Test</button>}
 
     </div>
   )
