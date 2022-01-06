@@ -1,5 +1,3 @@
-import typingTestService from '../services/typingTestService'
-
 const initialState = {
   typedText: "",
   currentChar: "",
@@ -120,7 +118,16 @@ const typingTestReducer = (state = initialState, action) => {
 //we update state on every key press during a typing test
 export const handleKeyPress = (event, currentChar, charsLeft) => {
   return dispatch => {
-    let actionType = typingTestService.handleKeyPress(event, currentChar, charsLeft);
+    event.preventDefault();
+
+    let actionType;
+    if(charsLeft === 0){
+      actionType = "FINISHED";
+    }else if(event.key === currentChar){
+      actionType = "STEP_FORWARD";
+    }else{
+      actionType = "MISTAKE";
+    }
 
     dispatch({
       type: actionType,
@@ -132,6 +139,5 @@ export const handleKeyPress = (event, currentChar, charsLeft) => {
 
 export const initializeText = text => { return { data: text, type: "INIT" }}
 export const resetTest = (text) => { return { data: text, type: "RESET" }}
-
 
 export default typingTestReducer;

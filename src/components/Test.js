@@ -8,12 +8,11 @@ const Test = () => {
     "Baseball is a bat-and-ball game played between two opposing teams, typically of nine players each, that take turns batting and fielding. The game proceeds when a player on the fielding team, called the pitcher, throws a ball which a player on the batting team tries to hit with a bat.",
     "Hip hop or hip-hop is a culture and art movement that was created by African Americans, Latino Americans and Caribbean Americans in the Bronx, New York City. The origin of the name is often disputed. It is also argued as to whether hip hop started in the South or West Bronx.",
   ];
-  const rndNum = Math.floor(Math.random() * 5);
+  const rndNum = Math.floor(Math.random() * texts.length);
 
   return(
     <div>
       <TypingTestContainer type="test" text={texts[rndNum]}/>
-
     </div>
   )
 }

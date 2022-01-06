@@ -1,6 +1,5 @@
 import userService from '../services/userService';
 
-
 const initialState = {
   isLoggedIn: false,
   username: "",
@@ -26,9 +25,7 @@ const userReducer = (state = initialState, action) => {
   }
 }
 
-//front end validation might take place here (we'll worry about validation later)
 export const logIn = (username, password) => (dispatch) => { 
-
   userService.logIn(username, password).then(response => {
     if(response.data.errors){
       throw(response.data.errors);
@@ -57,7 +54,6 @@ export const logIn = (username, password) => (dispatch) => {
 };
 
 export const register = (username, password, passwordConfirmed) => (dispatch) => {
-
   userService.register(username, password, passwordConfirmed).then(response => {
     if(response.data.errors){
       throw(response.data.errors);
@@ -89,6 +85,5 @@ export const logOut = () => {
 };
 
 export const newTest = (newTestData) => { return { newTestData, type: "NEW_TEST" } };
-
 
 export default userReducer;

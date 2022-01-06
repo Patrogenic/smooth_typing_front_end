@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const url = "http://localhost:3001/api/user";
 
-
 const register = async (username, password, password_confirmed) => {
   try {
     let response = await axios.post(`${url}/register`, { username, password, password_confirmed });
@@ -23,12 +22,9 @@ const logIn = async (username, password) => {
   } catch (error) {
     throw(error);
   }
-
 }
 
 const logOut = () => {
-  //I will need to clear redux-persist local storage data on logout
-  //localStorage.clear(); to clear all localStorage
   localStorage.removeItem('token');
 }
 
@@ -42,7 +38,6 @@ const validate = async () => {
   }
 }
 
-
 const getAuthHeader = () => {
   const token = localStorage.getItem('token');
 
@@ -52,6 +47,5 @@ const getAuthHeader = () => {
     return {};
   }
 }
-
 
 export default { logIn, logOut, register, validate, getAuthHeader };

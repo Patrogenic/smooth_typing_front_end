@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../reducers/userReducer";
-
 
 const DashBoard = () => {
   const dispatch = useDispatch();
@@ -17,13 +15,22 @@ const DashBoard = () => {
     fontSize: 20,
   }
 
+  const buttonStyle = {
+    position: "absolute",
+    top: 40,
+    right: 50,
+    backgroundColor: "#db9a2a",
+    borderRadius: 3,
+    padding: 5,
+    border: "none",
+    fontSize: 15,
+  }
+
   const listItemStyle = {
     paddingTop: 10,
     height: 30,
     borderBottom: "1px solid black",
   }
-
-  
 
   const handleLogOut = () => {
     dispatch(logOut());
@@ -39,8 +46,7 @@ const DashBoard = () => {
           <div style={listItemStyle}><span style={{fontWeight: "bold"}}>{index + 1} </span>WPM: {data.wpm} Time: {data.time} Accuracy: {data.accuracy}%</div>
         </div>
       )}
-      <div><button onClick={handleLogOut}>Log Out</button></div>
-
+      <div><button style={buttonStyle} className="hover" onClick={handleLogOut}>Log Out</button></div>
     </div>
   )
 }

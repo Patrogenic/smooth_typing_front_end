@@ -14,7 +14,6 @@ import userService from "./services/userService"
 import Test from "./components/Test"
 import { logOut } from "./reducers/userReducer"
 import { aboutText } from './data/textData'
-import introTestReducer from "./reducers/introTestReducer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,7 +36,7 @@ const App = () => {
   return (
     <div>
       {validated && <Router>
-        <Menu validated={validated} loggedIn={loggedIn}/>
+        <Menu loggedIn={loggedIn}/>
 
         <Switch>
           <Route path="/about">
@@ -56,7 +55,6 @@ const App = () => {
           <Route exact path="/">
             <TypingTestContainer type="site intro" text={aboutText[introTest.textSlide]}/>
           </Route>
-
         </Switch>
 
         <Footer />

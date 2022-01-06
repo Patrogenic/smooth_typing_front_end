@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import typingTestService from '../services/typingTestService'
 import TestDetails from './TestDetails'
-import { showDetails } from '../reducers/testResultsReducer'
 import { nextSlide } from '../reducers/introTestReducer'
 import { resetTest } from '../reducers/typingTestReducer';
 import { newTest } from '../reducers/userReducer';
@@ -21,13 +20,10 @@ const TestResults = ({ type }) => {
   const wpm = Math.round(60 * (testData.typedText.length / 5) / testTimeElapsed);
   const accuracy = Math.round(1000 * ( testData.typedText.length - mistakes ) / testData.typedText.length) / 10;
 
-  //work on button positioning
   const buttonStyle = {
     position: "absolute",
     bottom: 40,
     right: 50,
-    // color: 
-    // border: "none",
     backgroundColor: "#db9a2a",
     borderRadius: 3,
     padding: 5,
@@ -43,17 +39,9 @@ const TestResults = ({ type }) => {
     justifyContent: "space-around"
   }
 
-
-
-  //performs an api call when I click "continue to tests"
   useEffect(() => {
-    console.log("test results");
-    //async
-    //send { text: typedText, typedText: typedTextMistakes } (I will need to work on more uniform naming conventions)
-    //no error checking? (what happens when the server is not running)
     let newTestData = { text: testData.typedText, typedText: testData.typedTextMistakes, wpm, accuracy, time: testTimeElapsed };
     typingTestService.sendTestData(newTestData).then(res => {
-      console.log("api call on test completion")
       setTestDetails(res.data);
       dispatch(newTest(newTestData));
     });
@@ -71,9 +59,6 @@ const TestResults = ({ type }) => {
     }
   }, [])
 
-
-  //results view will vary based on the type of test
-
   const handleContinue = () => {
     dispatch(resetTest(" "));
   }
@@ -90,7 +75,6 @@ const TestResults = ({ type }) => {
   return(
     <div className="fade">
       <TestDetails testDetails={testDetails}/>
-      {/* <div style={finishedStyle}>Finished!</div> */}
       <div style={statsWrapper}>
         <div>Time: {testTimeElapsed} sec</div>
         <div>WPM: {wpm}</div>
@@ -103,7 +87,6 @@ const TestResults = ({ type }) => {
         <button style={buttonStyle} className="hover" onClick={handleContinue}>Continue</button> :
         <a style={buttonStyle} className="hover" onClick={handleContinueToTests}>Continue to Tests</a>)}
 
-      {/* functionality is unimplemented currently */}
       {type === "test" && <button style={buttonStyle} className="hover" onClick={handleNewTest}>Next Test</button>}
 
     </div>

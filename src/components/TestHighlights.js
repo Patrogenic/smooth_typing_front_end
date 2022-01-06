@@ -1,5 +1,3 @@
-
-
 const TestHighlights = ({ highlights }) => {
   const style = {
     backgroundColor: "white",

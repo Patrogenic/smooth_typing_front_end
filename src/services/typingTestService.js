@@ -9,18 +9,4 @@ const sendTestData = async (data) => {
   return response;
 }
 
-
-const handleKeyPress = (event, currentChar, charsLeft) => {
-  event.preventDefault();
-
-  if(charsLeft === 0){
-    return "FINISHED";
-  }else if(event.key === currentChar){
-    return "STEP_FORWARD";
-  }
-
-  return "MISTAKE";
-}
-
-
-export default { handleKeyPress, sendTestData }
+export default { sendTestData }

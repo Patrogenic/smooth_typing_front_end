@@ -21,13 +21,10 @@ const TypingTestContainer = ({ text, type }) => {
   }
 
   useEffect(() => {
-    //I might need some kind of json file where I store text data?
-    //Ultimately, I suppose a lot of these strings will end up in the database
     if(text){
       dispatch(initializeText(text));
     }
   }, [dispatch, text]);
-
 
   return(
     <div style={typingTestStyles}>

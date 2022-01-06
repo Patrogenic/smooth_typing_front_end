@@ -14,8 +14,6 @@ const SequenceStats = ({ type, sequences, highlightFn }) => {
       {sequences && sequences.map(seq => 
         <div className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}": {Math.round(48 / (seq.avgTime / 1000) * 10) / 10} WPM ({seq.instances})</div>  
       )}
-        {/* <div className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}", WPM: {Math.round(48 / (seq.avgTime / 1000) * 10) / 10}, Freq: {seq.instances}  </div>   */}
-
     </div>
   )
 }

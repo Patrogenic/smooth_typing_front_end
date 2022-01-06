@@ -1,38 +1,15 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { hideDetails, showHighlights } from '../reducers/testResultsReducer'
+import { showHighlights } from '../reducers/testResultsReducer'
 import TestHighlights from './TestHighlights';
 import SequenceStats from './SequenceStats';
 import MistakeStats from './MistakeStats';
 
-//https://www.w3schools.com/howto/howto_css_modals.asp
 const TestDetails = ({ testDetails }) => {
   const dispatch = useDispatch();
   const testData = useSelector(state => state.typingTest);
   const [highlights, setHighlights] = useState([<span key={1}>{testData.typedText}</span>]);
 
-  const modalStyle = {
-    display: "block", /* Hidden by default */
-    position: "fixed", /* Stay in place */
-    zIndex: 1, /* Sit on top */
-    left: 0,
-    top: 0,
-    width: "100%", /* Full width */
-    height: "100%", /* Full height */
-    overflow: "auto", /* Enable scroll if needed */
-    backgroundColor: "rgb(0,0,0)", /* Fallback color */
-    backgroundColor: "rgba(0,0,0,0.4)", /* Black w/ opacity */
-  }
-  const modalContentStyle = {
-    // position: "relative",
-    backgroundColor: "#fefefe",
-    margin: "150px auto", /* 15% from the top and centered */
-    padding: 20,
-    border: "1px solid #888",
-    width: "80%", /* Could be more or less, depending on screen size */
-    maxWidth: 700,
-  }
-  
   const statsStyle = {
     marginTop: 40,
     display: "flex",
@@ -55,7 +32,6 @@ const TestDetails = ({ testDetails }) => {
       let target = post.slice(index, index + len);
       post = post.slice(index + len);
 
-
       highlights.push(<span key={key++}>{pre}</span>);
       highlights.push(<span key={key++} style={highlightStyle}>{target}</span>);
     }
@@ -69,16 +45,12 @@ const TestDetails = ({ testDetails }) => {
   return(
     <div>
       <div>
-        {/* I might want to limit this to a certain number of lines and then scroll */}
         <TestHighlights highlights={highlights} />
         <div style={statsStyle}>
           <SequenceStats type="Fastest" sequences={testDetails.bestSequences} highlightFn={highlightSequence} />
           <SequenceStats type="Slowest" sequences={testDetails.worstSequences} highlightFn={highlightSequence} />
           <MistakeStats mistakeData={testDetails.mistakeData} highlightFn={highlightSequence} />
         </div>
-        <br/>
-        {/* {testResults.showHighlights && <TestHighlights highlights={highlights} />} */}
-        {/* <button onClick={() => dispatch(hideDetails())}>Close</button> */}
       </div>
     </div>
   )

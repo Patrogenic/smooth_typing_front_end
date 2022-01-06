@@ -1,12 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import userService from '../services/userService';
-import { useDispatch, useSelector } from 'react-redux';
-import { logOut } from '../reducers/userReducer';
 
-const Menu = ({ validated, loggedIn }) => {
-  const dispatch = useDispatch();
-  // const [ loggedIn, setLoggedIn ] = useState(false);
+const Menu = ({ loggedIn }) => {
 
   const navWrapperStyles = {
     backgroundColor: "lightBlue",
@@ -29,26 +23,13 @@ const Menu = ({ validated, loggedIn }) => {
     height: 100,
   }
 
-  // useEffect(() => {
-  //   if(localStorage.getItem('token')){
-  //     userService.validate().then(response => {
-  //       setLoggedIn(true);
-  //     }, error => {
-  //       localStorage.removeItem('token');
-  //       dispatch(logOut());
-  //     })
-  //   }
-  // }, [])
-
-
-  // Think about names for the menu items
   return(
     <div>
       <div style={navWrapperStyles}>
         <nav style={navStyles}>
           <Link to="/" style={navItemStyles}>Home</Link>
           <Link to="/test" style={navItemStyles}>Test</Link>
-          <Link to="/about" style={navItemStyles}>About</Link>
+          {/* <Link to="/about" style={navItemStyles}>About</Link> */}
 
           {loggedIn ? 
             <Link to="/dashboard" style={navItemStyles}>Dashboard</Link> :

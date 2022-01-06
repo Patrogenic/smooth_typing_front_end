@@ -6,7 +6,6 @@ const initialState = {
 }
 
 const setNext = (state, action) => {
-
   let finished = false;
   if(state.textSlide + 2 >= aboutText.length){
     finished = true;
@@ -16,13 +15,11 @@ const setNext = (state, action) => {
 }
 
 const introTestReducer = (state = initialState, action) => {
-
   switch(action.type){
     case "NEXT":
       return setNext(state, action);
     default: return state;
   }
-
 }
 
 export const nextSlide = () => { return { type: "NEXT" }};
