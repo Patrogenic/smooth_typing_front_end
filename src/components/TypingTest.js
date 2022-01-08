@@ -10,6 +10,7 @@ const TypingTest = () => {
     width: "100%",
     height: "100%",
     fontFamily: "monospace",
+    outline: "none",
   }
 
   return(

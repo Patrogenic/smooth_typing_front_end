@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = "http://localhost:3001/api/user";
+const url = "http://smoothtyping.com/api/user";
 
 const register = async (username, password, password_confirmed) => {
   try {
