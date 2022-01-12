@@ -9,10 +9,12 @@ const QuestionMark = ({text}) => {
   }
 
   const questionMarkStyles = {
-    width: 20,
-    height: 20,
-    fontSize: 17,
-    borderRadius: "100%",
+    width: "1.8ex",
+    height: "1.8ex",
+    fontSize: "1.8ex",
+    lineHeight: "1.8ex",
+    borderRadius: "1.2ex",
+    // borderRadius: "100%",
     border: "2px solid black",
     textAlign: "center",
     display: "inline-block",

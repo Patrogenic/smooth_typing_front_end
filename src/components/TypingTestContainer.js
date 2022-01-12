@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { initializeText } from "../reducers/typingTestReducer"
+import { initializeText, resetTest } from "../reducers/typingTestReducer"
 import TypingTest from "./TypingTest"
 import TestResults from "./TestResults"
 
@@ -23,6 +23,10 @@ const TypingTestContainer = ({ text, type }) => {
   useEffect(() => {
     if(text){
       dispatch(initializeText(text));
+    }
+
+    return () => {
+      dispatch(resetTest(" "));
     }
   }, [dispatch, text]);
 
