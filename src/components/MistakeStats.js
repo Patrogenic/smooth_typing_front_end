@@ -19,7 +19,7 @@ const MistakeStats = ({ mistakeData, highlightFn }) => {
     <div style={containerStyles}>
         <div style={headerStyles}>Mistakes:</div> <QuestionMark text={helpText} />
         {mistakeData && mistakeData.map((mistake, index) => 
-          <div className="underline" onClick={() => highlightFn(mistake.expected)} key={index}>Typed: "{mistake.actual}", Expected: "{mistake.expected}"</div>
+          <div title="Click to Hightlight Mistake" className="underline" onClick={() => highlightFn(mistake.expected)} key={index}>Typed: "{mistake.actual}", Expected: "{mistake.expected}"</div>
         )}
     </div>
   )

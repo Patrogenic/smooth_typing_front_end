@@ -12,7 +12,7 @@ const SequenceStats = ({ type, sequences, highlightFn }) => {
     <div>
       <div style={headerStyles}>{type}:</div> <QuestionMark text={helpText} />
       {sequences && sequences.map(seq => 
-        <div className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}": {Math.round(48 / (seq.avgTime / 1000) * 10) / 10} WPM ({seq.instances})</div>  
+        <div title="Click to Hightlight Sequence" className="underline" onClick={() => highlightFn(seq.seq)} key={seq.seq}>"{seq.seq}": {Math.round(48 / (seq.avgTime / 1000) * 10) / 10} WPM ({seq.instances})</div>  
       )}
     </div>
   )
